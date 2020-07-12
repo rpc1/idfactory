@@ -1,0 +1,13 @@
+server:
+  port: 9090
+ranges:
+  batch-size: 10
+redis:
+  server: redis-server
+  port: 6379
+  db-key: current-range
+
+
+
+
+

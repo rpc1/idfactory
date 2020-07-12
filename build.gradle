@@ -1,0 +1,99 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+    id 'com.adarshr.test-logger' version '1.6.0'
+}
+
+group 'challenge.maxilect'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+ext {
+    springbootVersion = "2.2.5.RELEASE"
+}
+dependencies {
+    // spring
+    implementation "org.springframework.boot:spring-boot-starter-web:${springbootVersion}"
+    implementation "org.springframework.boot:spring-boot-configuration-processor:${springbootVersion}"
+    runtimeOnly "org.springframework.boot:spring-boot-devtools:${springbootVersion}"
+    implementation 'org.redisson:redisson:3.12.5'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
+    implementation group: 'com.esotericsoftware', name: 'kryo', version: '4.0.2'
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springbootVersion}"
+    testImplementation  "org.mockito:mockito-core:2.22.0"
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+}
+
+configurations {
+
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+}
+
+test {
+    useJUnitPlatform()
+}
+
+testlogger {
+    theme 'mocha'
+    showExceptions true
+    slowThreshold 2000
+    showSummary true
+    showPassed true
+    showSkipped true
+    showFailed true
+    showStandardStreams false
+    showPassedStandardStreams true
+    showSkippedStandardStreams true
+    showFailedStandardStreams true
+}
+
+sourceSets {
+    integrationTest {
+
+        compileClasspath += main.output //+ test.output
+        runtimeClasspath += main.output //+ test.output
+
+        java {
+            srcDirs = ["src/it/java"]
+        }
+        resources {
+            srcDirs = ["src/it/resources"]
+        }
+    }
+}
+
+/**
+ * Интеграционные тесты запускаются отдельной командой
+ */
+task integrationTest(type: Test) {
+
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
+dependencies {
+
+    integrationTestImplementation(
+            "org.springframework.boot:spring-boot-starter-test:${springbootVersion}",
+            "org.junit.jupiter:junit-jupiter-api:5.2.0",
+            "org.testcontainers:junit-jupiter:1.14.3",
+            "org.testcontainers:testcontainers:1.14.3",
+            "org.redisson:redisson:3.12.5",
+            "com.esotericsoftware:kryo:4.0.2"
+
+
+    )
+    integrationTestRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+}
+

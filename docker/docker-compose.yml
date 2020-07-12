@@ -1,0 +1,28 @@
+version: '3.4'
+services:
+  redis:
+    image: redis
+    hostname: redis-server
+    tty: false
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
+  idfactory1:
+    image: idfactory
+    tty: false
+    expose:
+      - 9090
+    ports:
+      - "9090:9090"
+    links:
+      - "redis:redis-server"
+  idfactory2:
+    image: idfactory
+    tty: false
+    expose:
+      - 9091
+    ports:
+      - "9091:9090"
+    links:
+      - "redis:redis-server"

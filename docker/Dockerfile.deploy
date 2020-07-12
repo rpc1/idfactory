@@ -1,0 +1,5 @@
+FROM openjdk:11-jdk-slim
+RUN mkdir /opt/idfactory
+WORKDIR /opt/idfactory
+COPY ./build/libs/idfactory.jar /opt/idfactory/idfactory.jar
+CMD ["java","-jar","idfactory.jar"]

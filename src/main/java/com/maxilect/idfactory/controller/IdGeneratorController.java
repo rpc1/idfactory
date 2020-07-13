@@ -26,6 +26,7 @@ public class IdGeneratorController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public void handleException(Exception e) {
-        LoggerFactory.getLogger(IdGeneratorController.class).error(e.getMessage());}
+        LoggerFactory.getLogger(IdGeneratorController.class).error(e.getMessage());
+    }
 }
 

@@ -32,13 +32,12 @@ public class RedisRangeGenerator implements RangeGenerator {
         Logger logger = LoggerFactory.getLogger(RangeGenerator.class);
         long maxValue;
         try {
-             maxValue = client.getAtomicLong(dbKey).addAndGet(batchSize);
+            maxValue = client.getAtomicLong(dbKey).addAndGet(batchSize);
         } catch (RedisException exception) {
-            logger.error("{}",exception.getMessage());
+            logger.error("{}", exception.getMessage());
             if (exception.getMessage() != null && exception.getMessage().contains("overflow")) {
                 throw new RangeOverflowException("Range overflow error");
-            }
-            else {
+            } else {
                 throw new RangeGeneratorException("Error requesting data from Redis " + exception.getMessage());
             }
         }

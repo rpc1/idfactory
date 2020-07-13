@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class IdGeneratorService implements IdGenerator{
+public class IdGeneratorService implements IdGenerator {
 
     private final RangeGenerator rangeGenerator;
 
@@ -17,7 +17,7 @@ public class IdGeneratorService implements IdGenerator{
     public IdGeneratorService(RangeGenerator rangeGenerator) {
         this.rangeGenerator = rangeGenerator;
         this.currentIdValue = new AtomicLong(0);
-        this.currentRange = new Range(0,1,0);
+        this.currentRange = new Range(0, 1, 0);
     }
 
 

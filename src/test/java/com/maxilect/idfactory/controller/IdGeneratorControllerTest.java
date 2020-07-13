@@ -39,7 +39,7 @@ class IdGeneratorControllerTest {
         Mockito.when(idGenerator.generateUniqueId()).thenReturn(idValue);
         this.mvc.perform(get(ROUTE_URL).contentType(MediaType.ALL))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is((int)idValue.getId())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is((int) idValue.getId())));
     }
 
     @Test

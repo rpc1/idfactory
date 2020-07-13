@@ -8,12 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 
-
 class IdGeneratorServiceTest {
 
     @Test
     void generateUniqueId_shouldReturnNextValueAfterMin() {
-        Range range = new Range(10,1, 100);
+        Range range = new Range(10, 1, 100);
         RangeGenerator rangeGenerator = Mockito.mock(RangeGenerator.class);
         Mockito.when(rangeGenerator.getNextRange()).thenReturn(range);
         IdGenerator idGenerator = new IdGeneratorService(rangeGenerator);
@@ -22,13 +21,13 @@ class IdGeneratorServiceTest {
     }
 
     @Test
-    void generateUniqueId_allIdShouldBeInRange () {
-        Range range = new Range(10,1, 100);
+    void generateUniqueId_allIdShouldBeInRange() {
+        Range range = new Range(10, 1, 100);
         RangeGenerator rangeGenerator = Mockito.mock(RangeGenerator.class);
         Mockito.when(rangeGenerator.getNextRange()).thenReturn(range);
         IdGenerator idGenerator = new IdGeneratorService(rangeGenerator);
         IdValue id;
-        for (long i=range.getMin(); i < range.getMax(); i++) {
+        for (long i = range.getMin(); i < range.getMax(); i++) {
             id = idGenerator.generateUniqueId();
             Assertions.assertTrue(id.getId() > range.getMin() && id.getId() <= range.getMax());
         }
